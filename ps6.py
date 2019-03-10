@@ -1,5 +1,7 @@
 import string
-#hello
+# hello
+# hello
+# again!!
 
 ### DO NOT MODIFY THIS FUNCTION ###
 def load_words(file_name):
