@@ -111,17 +111,17 @@ class Message(object):
         return lower_dict
 
     def apply_shift(self, shift):
-        '''
+        """
         Applies the Caesar Cipher to self.message_text with the input shift.
         Creates a new string that is self.message_text shifted down the
-        alphabet by some number of characters determined by the input shift        
-        
+        alphabet by some number of characters determined by the input shift
+
         shift (integer): the shift with which to encrypt the message.
         0 <= shift < 26
 
         Returns: the message text (string) in which every character is shifted
              down the alphabet by the input shift
-        '''
+        """
         text = ""
         shift_dict = self.build_shift_dict(shift)
         for char in self.get_message_text():
@@ -177,7 +177,8 @@ class CiphertextMessage(Message):
             self.message_text (string, determined by input text)
             self.valid_words (list, determined using helper function load_words)
         """
-        pass  # delete this line and replace with your code here
+        Message.__init__(self, text)
+        self.valid_words = load_words(WORDLIST_FILENAME)
 
     def decrypt_message(self):
         """
@@ -195,7 +196,18 @@ class CiphertextMessage(Message):
         Returns: a tuple of the best shift value used to decrypt the message
         and the decrypted message text using that shift value
         """
-        pass  # delete this line and replace with your code here
+        best_shift = [0, '', 0]  # [shift, message, valid words]
+
+        for i in range(1, 27):
+            valid_words = 0
+            for word in self.apply_shift(i).split(' '):
+                if is_word(self.valid_words, word):
+                    valid_words += 1
+            if valid_words > best_shift[2]:
+                best_shift = [i, self.apply_shift(i), valid_words]
+
+        return (best_shift[0], best_shift[1])
+
 
 # Example test case (PlaintextMessage)
 # plaintext = PlaintextMessage('hello', 2)
@@ -203,6 +215,6 @@ class CiphertextMessage(Message):
 # print('Actual Output:', plaintext.get_message_text_encrypted())
 
 # Example test case (CiphertextMessage)
-# ciphertext = CiphertextMessage('jgnnq')
-# print('Expected Output:', (24, 'hello'))
-# print('Actual Output:', ciphertext.decrypt_message())
+ciphertext = CiphertextMessage('jgnnq')
+print('Expected Output:', (24, 'hello'))
+print('Actual Output:', ciphertext.decrypt_message())
