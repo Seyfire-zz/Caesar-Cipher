@@ -26,7 +26,7 @@ def is_word(word_list, word):
     word (string): a possible word.
     """
     word = word.lower()
-    word = word.strip(" !@#$%^&*()-_+={}[]|\:;'<>?,./\"")
+    word = word.strip(r" !@#$%^&*()-_+={}[]|\:;'<>?,./\"")
     return word in word_list
 
 
@@ -38,6 +38,16 @@ def get_story_string():
     story = str(f.read())
     f.close()
     return story
+
+
+def decrypt_story():
+    """
+    Decrypts the story stored in story.txt in this directory
+    story (str):
+    returns: decrypted version of story (string)
+    """
+    story = CiphertextMessage(get_story_string())
+    return story.decrypt_message()[1]
 
 
 WORDLIST_FILENAME = 'words.txt'
@@ -174,12 +184,13 @@ class CiphertextMessage(Message):
         return best_shift[0], best_shift[1]
 
 
-# Example test case (PlaintextMessage)
-plaintext = PlaintextMessage('hello', 2)
-print('Expected Output: jgnnq')
-print('Actual Output:', plaintext.get_message_text_encrypted())
+# # Example test case (PlaintextMessage)
+# plaintext = PlaintextMessage('hello', 2)
+# print('Expected Output: jgnnq')
+# print('Actual Output:', plaintext.get_message_text_encrypted())
+#
+# # Example test case (CiphertextMessage)
+# ciphertext = CiphertextMessage('jgnnq')
+# print('Expected Output:', (24, 'hello'))
+# print('Actual Output:', ciphertext.decrypt_message())
 
-# Example test case (CiphertextMessage)
-ciphertext = CiphertextMessage('jgnnq')
-print('Expected Output:', (24, 'hello'))
-print('Actual Output:', ciphertext.decrypt_message())
