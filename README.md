@@ -1,7 +1,10 @@
 # Caesar-Cipher
 
-Object oriented approach to representing and implementing a Caesar Cipher form of encryption :)
+#### Description
+Object oriented approach to representing and implementing a Caesar Cipher form of encryption :)  
+For MITx 6.00.1x course.
 
+#### Explanation
 The Message class is the main parent class. 
 It builds a dictionary of ascii upper and lower case letters as keys, and values based on the alphabet shift provided.
 
